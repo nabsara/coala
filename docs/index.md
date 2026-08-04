@@ -2,7 +2,7 @@
 
 <h1>CoALa: A Plugin model for Controlling Audio Latents</h1>
 Supporting webpage for ISMIR 2026.
-Code is available <a href="https://https://github.com/nabsara/coala">here</a>.
+Code is available <a href="https://github.com/nabsara/coala">here</a>.
 </div>
 
 <br>
