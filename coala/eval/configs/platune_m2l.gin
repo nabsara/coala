@@ -1,0 +1,78 @@
+from __gin__ import dynamic_registration
+
+from coala.datasets import audio_dataset
+from coala.eval.networks import transformerv2
+from coala.eval import platune
+
+
+# HPARAMS
+
+BATCH = 256
+
+N_WORKERS = 8
+
+TRAIN_LMDB_KEYS = 'lmdb_keys_s42_r90_train.pkl'
+VAL_LMDB_KEYS = 'lmdb_keys_s42_r10_val.pkl'
+
+LATENT_DIM = 64
+
+SEQ_LENGTH = 32
+
+DISCRETE_KEYS = []
+CLASSES_ATTR_DISCRETE = []
+
+CONTINUOUS_KEYS = ["loudness", "sharpness", "booming"]
+
+SIGMA_INIT = 0.4
+SIGMA_DECAY = 0.995
+R = 0.4
+
+SIGMA_TARGET_CONTINUOUS = 0.3
+
+LEARNING_RATE = 1e-4
+USE_GRAD_CLIP = True
+
+NB_STEPS = 20
+
+
+# DATA_LOADER  
+audio_dataset.load_data:
+    attr_keys = %CONTINUOUS_KEYS
+    other_keys = []
+    drop_last = True
+    batch_size = %BATCH
+    n_workers = %N_WORKERS
+    use_cache = False
+
+
+# NETWORKS
+transformerv2.Denoiser:
+    n_channels = %LATENT_DIM
+    seq_len = %SEQ_LENGTH
+    embed_dim = 512
+    noise_embed_dims = 128
+    n_layers = 6
+    mlp_multiplier = 3
+    dropout = 0.1
+    causal = False
+    pos_emb_type = "rotary"
+    max_cache_size = 0
+    min_chunk_size = 1
+
+
+# MODEL
+platune.PLaTune:
+    flow = @transformerv2.Denoiser
+    latent_dim = %LATENT_DIM
+    discrete_keys = %DISCRETE_KEYS
+    continuous_keys = %CONTINUOUS_KEYS
+    classes_attr_discrete = %CLASSES_ATTR_DISCRETE
+    sigma_init = %SIGMA_INIT
+    r = %R
+    sigma_decay = %SIGMA_DECAY
+    sigma_target_continuous = %SIGMA_TARGET_CONTINUOUS
+    lr = %LEARNING_RATE
+    use_grad_clip = %USE_GRAD_CLIP
+    n_ex_val = 2
+    nb_steps = %NB_STEPS
+    scale_controls = 1.

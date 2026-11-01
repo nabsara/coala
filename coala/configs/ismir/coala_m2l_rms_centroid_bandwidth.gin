@@ -1,0 +1,150 @@
+from __gin__ import dynamic_registration
+
+from coala.datasets import audio_dataset
+from coala.models import networks
+from coala.models import blocks
+from coala.models import model
+
+import cached_conv as cc
+
+
+# CONVOLUTION CONFIGURATION
+cc.Conv1d.bias = False
+
+blocks.normalization.mode = 'weight_norm'
+
+
+# HPARAMS
+
+UNLABEL_LMDB_KEYS = 'lmdb_keys_s42_r90_nolabel.pkl'
+VAL_LMDB_KEYS = 'lmdb_keys_s42_r10_val.pkl'
+BATCH_SIZE = 64
+
+LABEL_LMDB_KEYS = 'lmdb_keys_s42_r10_label.pkl' 
+BATCH_SIZE_LABEL = 192
+
+N_WORKERS = 8
+
+CDIM = 3
+LATENT_DIM = 64 
+CONTROL_DIM = 67
+
+ATTRIBUTES = ['rms', 'centroid', 'bandwidth']
+
+N_CLASSES_PER_FACTOR = [20, 20, 20]
+QUANTIZED = [True, True, True]
+RM_SILENT_REF = [False, False, False]
+
+N_MAX_FRAMES = [None, None, None]
+
+CLASS_VALUES = None
+
+N_REF_SEQ = 1
+
+
+USE_CACHE = True
+
+
+SEQ_LENGTH = 32
+HIDDEN_DIM = 128
+KERNEL_SIZE = 3
+DILATIONS = [[1, 2, 4], [1, 2, 4], [1, 2, 4]]
+
+
+LEARNING_RATE = 1e-4
+
+
+# HPARAMS ELBO
+
+BETA_KL_C = 0.01
+WARMUP_KL_C = 10000
+
+
+# HPARAMS CONTRASTIVE
+
+USE_CONTRAST = True
+BETA_CONTRAST = 1.
+WARMUP_CONTRAST = 1000
+
+TEMPERATURE = 0.07
+
+
+# LOAD DATA
+audio_dataset.load_data:
+    attr_keys = %ATTRIBUTES
+    other_keys = []
+    crop_length = None
+    n_workers = %N_WORKERS
+    drop_last = True
+    class_values = %CLASS_VALUES
+    quantized = %QUANTIZED
+    n_max_frames = %N_MAX_FRAMES
+
+
+unlabel_data/audio_dataset.load_data.lmdb_keys_filename = %UNLABEL_LMDB_KEYS
+unlabel_data/audio_dataset.load_data.batch_size = %BATCH_SIZE
+unlabel_data/audio_dataset.load_data.shuffle = True
+unlabel_data/audio_dataset.load_data.use_cache = False
+
+label_data/audio_dataset.load_data.lmdb_keys_filename = %LABEL_LMDB_KEYS
+label_data/audio_dataset.load_data.batch_size = %BATCH_SIZE_LABEL
+label_data/audio_dataset.load_data.shuffle = True
+label_data/audio_dataset.load_data.use_cache = %USE_CACHE
+
+val_data/audio_dataset.load_data.lmdb_keys_filename = %VAL_LMDB_KEYS
+val_data/audio_dataset.load_data.batch_size = %BATCH_SIZE
+val_data/audio_dataset.load_data.shuffle = False
+val_data/audio_dataset.load_data.use_cache = %USE_CACHE
+
+
+model.MyDataModule:
+    unlabel_data = @unlabel_data/audio_dataset.load_data
+    label_data = @label_data/audio_dataset.load_data
+    val_data = @val_data/audio_dataset.load_data
+
+
+# NETWORKS
+
+networks.CNNLatentEncoderWithExtraLatents:
+    latent_dim = %LATENT_DIM 
+    n_control_dims = %CDIM
+    seq_length = %SEQ_LENGTH
+    hidden_dim = %HIDDEN_DIM
+    kernel_size = %KERNEL_SIZE
+    dilations = %DILATIONS
+
+networks.MiniCausalCNNLatentDecoder:
+    latent_dim = %LATENT_DIM
+    control_dim = %CONTROL_DIM
+    seq_length = %SEQ_LENGTH
+    hidden_dim = 64
+    kernel_size = 3
+
+
+# MODEL
+model.CoALa:
+    control_extractor = @networks.CNNLatentEncoderWithExtraLatents
+    latent_projector = @networks.MiniCausalCNNLatentDecoder
+    cdim = %CDIM
+    attributes = %ATTRIBUTES
+    n_classes_per_factor = %N_CLASSES_PER_FACTOR
+    class_values = %CLASS_VALUES
+    quantized = %QUANTIZED
+    rm_silent_ref = %RM_SILENT_REF
+    lr = %LEARNING_RATE
+    beta_kl_c = %BETA_KL_C
+    warmup_kl_c = %WARMUP_KL_C
+    use_contrast = %USE_CONTRAST
+    beta_contrast = %BETA_CONTRAST
+    warmup_contrast = %WARMUP_CONTRAST
+    temperature = %TEMPERATURE
+    n_ex_val = 500
+    ref_mode = 'agg'
+    n_max_frames = %N_MAX_FRAMES
+    shuffle = False
+    use_seqids = False
+    rm_zero_q = False
+    eps = 0.
+    n_ref_seq = %N_REF_SEQ
+    version = 'v4'
+    same_class = True

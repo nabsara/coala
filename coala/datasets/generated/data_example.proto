@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package data_example;
+
+message DataExample {
+    
+    enum Precision {
+        FLOAT16 = 0;
+        FLOAT32 = 1;
+        FLOAT64 = 2;
+        INT16 = 3;
+        INT32 = 4;
+        INT64 = 5;
+        RAW = 6;
+    }
+
+    message DataBuffer {
+        repeated int32 shape = 1;
+        optional bytes data = 2;
+        optional Precision precision = 3;
+        map<string, string> metadata = 4;
+        optional string format = 5;
+    }
+
+    map<string, DataBuffer> buffers = 1;
+    map<string, string> metadata = 2;
+
+}
