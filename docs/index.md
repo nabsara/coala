@@ -44,15 +44,15 @@ We demonstrate **CoALa** for disentangling and controlling the **spectral centro
 
 The examples below compare the original codec output and its reconstruction.
 
-<div style="display: flex; gap: 16px;">
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 24px;">
 <div>
-  <video style="width: 100%; min-width: 0;" controls loop playsinline preload="metadata">
+  <video style="width: 100%; min-width: 0;" controls playsinline preload="metadata">
     <source src="assets/ex_centroid/ex204_spectrogram_centroid_gt_codec.mp4" type="video/mp4">
   </video>
   <p style="text-align: center;"><strong>Ground truth (codec output)</strong></p>
 </div>
 <div>
-  <video style="width: 100%; min-width: 0;" controls loop playsinline preload="metadata">
+  <video style="width: 100%; min-width: 0;" controls playsinline preload="metadata">
     <source src="assets/ex_centroid/ex204_spectrogram_centroid_reconstruction.mp4" type="video/mp4">
   </video>
   <p style="text-align: center;"><strong>Reconstruction</strong></p>
@@ -69,28 +69,28 @@ The following examples demonstrate how CoALa responds to 4 different control tra
     <video style="width: 100%; display: block;" controls playsinline preload="metadata">
       <source src="assets/ex_centroid/ex204_spectrogram_centroid_crescendo-crescendo.mp4" type="video/mp4">
     </video>
-    <p style="text-align: center;"><strong>Control signal conditining: 2 ascending ramps</strong></p>
+    <p style="text-align: center;"><strong>Ascending - Ascending</strong></p>
   </div>
 
   <div>
     <video style="width: 100%; display: block;" controls playsinline preload="metadata">
       <source src="assets/ex_centroid/ex204_spectrogram_centroid_crescendo-decrescendo.mp4" type="video/mp4">
     </video>
-    <p style="text-align: center;"><strong>Control signal conditining: ascending then descending ramps</strong></p>
+    <p style="text-align: center;"><strong>Ascending - Descending</strong></p>
   </div>
 
   <div>
     <video style="width: 100%; display: block;" controls playsinline preload="metadata">
       <source src="assets/ex_centroid/ex204_spectrogram_centroid_decrescendo-crescendo.mp4" type="video/mp4">
     </video>
-    <p style="text-align: center;"><strong>Control signal conditining: descending then ascending ramps</strong></p>
+    <p style="text-align: center;"><strong>Descending - Ascending</strong></p>
   </div>
 
   <div>
     <video style="width: 100%; display: block;" controls playsinline preload="metadata">
       <source src="assets/ex_centroid/ex204_spectrogram_centroid_decrescendo-decrescendo.mp4" type="video/mp4">
     </video>
-    <p style="text-align: center;"><strong>Control signal conditining: 2 descending ramps</strong></p>
+    <p style="text-align: center;"><strong>Descending - Descending</strong></p>
   </div>
 
 </div>
