@@ -105,7 +105,7 @@ The following examples demonstrate how CoALa responds to 4 different control tra
 
 Finally, we demonstrate CoALa for real-time, interactive control of pretrained RAVE models within Max/MSP.
 
-### Demo 1: CoALa streaming with 1 control:
+### Demo 1 - CoALa streaming with 1 control:
 
 CoALa enables real-time control of the spectral centroid in a RAVE model pretrained on the MusDB18HQ-drums dataset. 
 
@@ -115,7 +115,7 @@ The control dimension is learned using 10% labeled data, with spectral centroid 
   <source src="assets/demos_max/ismir26_demo_max_rave_coala_centroid_drums.mp4" type="video/mp4">
 </video>
 
-### Demo 2: CoALa streaming with 3 controls:
+### Demo 2 - CoALa streaming with 3 controls:
 
 CoALa enables real-time control of 3 perceptual features in the pretrained RAVE [percussion](https://acids-ircam.github.io/rave_models_download) model: *Loudness*, *Sharpness* and *Booming*. 
 
