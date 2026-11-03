@@ -21,7 +21,7 @@ In recent years, neural audio synthesis has advanced significantly, enabling hig
 
 <div>
 <p align="center">
-<img src="assets/imgs/ismir26_overview.png" style="width: 40%; height: auto;">
+<img src="assets/caola_approach.png" style="width: 100%; height: auto;">
 </p>
 <p style="text-align: center"><b>Figure 1: </b>Approach overview.</p>
 </div>
@@ -37,8 +37,63 @@ Here, we provide audio examples and additional results to complete the experimen
 
 # Disentangling one control
 
+We demonstrate **CoALa** for disentangling and controlling the **spectral centroid** on the [Music2Latent](https://github.com/SonyCSLParis/music2latent) pretrained model with the *MedleySolosDB* dataset, using only **10% labeled data**.
 
-[TO COMPLETE]
+
+### Reference and Reconstruction
+
+The examples below compare the original codec output and its reconstruction.
+
+<div style="display: flex; gap: 16px;">
+<div>
+  <video style="width: 50%; min-width: 0;" controls loop playsinline preload="metadata">
+    <source src="assets/ex_centroid/ex204_spectrogram_centroid_gt_codec.mp4" type="video/mp4">
+  </video>
+  <p style="text-align: center;"><strong>Ground truth (codec output)</strong></p>
+</div>
+<div>
+  <video style="width: 50%; min-width: 0;" controls loop playsinline preload="metadata">
+    <source src="assets/ex_centroid/ex204_spectrogram_centroid_reconstruction.mp4" type="video/mp4">
+  </video>
+  <p style="text-align: center;"><strong>Reconstruction</strong></p>
+</div>
+</div>
+
+### Controlling the Spectral Centroid
+
+The following examples demonstrate how CoALa responds to 4 different control trajectories, consisting of combinations of ascending and descending ramps, defined in the control space.
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;">
+
+  <div>
+    <video style="width: 100%; display: block;" controls playsinline preload="metadata">
+      <source src="assets/ex_centroid/ex204_spectrogram_centroid_crescendo-crescendo.mp4" type="video/mp4">
+    </video>
+    <p style="text-align: center;"><strong>Control signal conditining: 2 ascending ramps</strong></p>
+  </div>
+
+  <div>
+    <video style="width: 100%; display: block;" controls playsinline preload="metadata">
+      <source src="assets/ex_centroid/ex204_spectrogram_centroid_crescendo-decrescendo.mp4" type="video/mp4">
+    </video>
+    <p style="text-align: center;"><strong>Control signal conditining: ascending then descending ramps</strong></p>
+  </div>
+
+  <div>
+    <video style="width: 100%; display: block;" controls playsinline preload="metadata">
+      <source src="assets/ex_centroid/ex204_spectrogram_centroid_decrescendo-crescendo.mp4" type="video/mp4">
+    </video>
+    <p style="text-align: center;"><strong>Control signal conditining: descending then ascending ramps</strong></p>
+  </div>
+
+  <div>
+    <video style="width: 100%; display: block;" controls playsinline preload="metadata">
+      <source src="assets/ex_centroid/ex204_spectrogram_centroid_decrescendo-decrescendo.mp4" type="video/mp4">
+    </video>
+    <p style="text-align: center;"><strong>Control signal conditining: 2 descending ramps</strong></p>
+  </div>
+
+</div>
 
 
 # Disentangling multiple controls
