@@ -46,13 +46,13 @@ The examples below compare the original codec output and its reconstruction.
 
 <div style="display: flex; gap: 16px;">
 <div>
-  <video style="width: 50%; min-width: 0;" controls loop playsinline preload="metadata">
+  <video style="width: 100%; min-width: 0;" controls loop playsinline preload="metadata">
     <source src="assets/ex_centroid/ex204_spectrogram_centroid_gt_codec.mp4" type="video/mp4">
   </video>
   <p style="text-align: center;"><strong>Ground truth (codec output)</strong></p>
 </div>
 <div>
-  <video style="width: 50%; min-width: 0;" controls loop playsinline preload="metadata">
+  <video style="width: 100%; min-width: 0;" controls loop playsinline preload="metadata">
     <source src="assets/ex_centroid/ex204_spectrogram_centroid_reconstruction.mp4" type="video/mp4">
   </video>
   <p style="text-align: center;"><strong>Reconstruction</strong></p>
