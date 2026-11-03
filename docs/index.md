@@ -57,7 +57,7 @@ CoALa enables real-time control of the spectral centroid in a RAVE model pretrai
 The control dimension is learned using 10% labeled data, with spectral centroid annotations automatically extracted from raw audio using [*librosa*](https://librosa.org/).
 
 <video width="700" controls>
-  <source src="assets/demos_max/ismir26_demo_max_rave_coala_centroid_drums.mp4" type="video/quicktime">
+  <source src="assets/demos_max/ismir26_demo_max_rave_coala_centroid_drums.mp4" type="video/mp4">
 </video>
 
 ### Demo 2: CoALa streaming with 3 controls:
@@ -67,6 +67,6 @@ CoALa enables real-time control of 3 perceptual features in the pretrained RAVE 
 These control dimensions were disentangled simulatneously using 10% labeled data, with labels extrated from raw audio using the [*Audio Commons Timbral Models*](https://github.com/AudioCommons/timbral_models) library.
 
 <video width="700" controls>
-  <source src="assets/demos_max/ismir26_demo_max_rave_coala_percu_loud_sharp_boom.mp4" type="video/quicktime">
+  <source src="assets/demos_max/ismir26_demo_max_rave_coala_percu_loud_sharp_boom.mp4" type="video/mp4">
 </video>
 
